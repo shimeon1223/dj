@@ -1,0 +1,63 @@
+{% extends 'todo/base.html' %}
+{% block header %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+  
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Logout' %}">ログアウト</a>
+                </li>
+            </ul>
+        </div>
+    </nav>   
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            {% include 'todo/includes/month.html' %}
+            <hr>
+            <form action="" method="POST">
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    <div class="form-group row">
+                        <label for="{{ field.id_for_label }}"
+                               class="col-sm-4 col-form-label">{{ field.label_tag }}</label>
+                        <div class="col-sm-8">
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-block">追加</button>
+            </form>
+        </div>
+        <div class="col-md-9">
+            {% include 'todo/includes/week.html' %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+{% endblock %}

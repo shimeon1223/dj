@@ -1,0 +1,29 @@
+    <a href="{% url 'mycalendar' week_previous.year week_previous.month  week_previous.day %}">前週</a>
+    {{ week_first | date:"Y年m月d日" }}〜{{ week_last | date:"Y年m月d日" }}
+    <a href="{% url 'mycalendar' week_next.year week_next.month  week_next.day %}">次週</a>
+
+    <table class="table" style="table-layout: fixed;">
+        <tbody>
+        <tr>
+            {% for day in week_days %}
+                <td class="{% if selected_date == day %}current{% endif %}{% if now == day %} table-success{% endif %} ">
+            {% if week_first.month != day.month %}
+                {{ day | date:"m/d" }}
+            {% else %}
+                {{ day.day }}
+            {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for schedules in week_day_schedules.values %}
+                <td>
+                    {% for s in schedules %}
+                        {{ s.start_time }} - {{ s.end_time }}<br>
+                        <a href="{% url 'schedule_detail' s.pk %}">{{ s.summary | linebreaks }}</a>
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>

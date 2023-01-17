@@ -1,0 +1,28 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+    <p>「{{s.summary}}」を削除しますか？</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">削除</button>
+        <a class="btn btn-outline-secondary" href="{% url 'schedule_detail' s.pk %}" role="button">戻る</a>
+    </form>
+{% endblock content %}
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+{% endblock %}

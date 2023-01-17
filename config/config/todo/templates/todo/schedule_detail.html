@@ -1,0 +1,33 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h2>{{ s.summary }}</h2>
+        <p>{{ s.start_time }} - {{ s.end_time }}</p>
+        <p><small class="text-muted">{{ s.description | linebreaks }}</small></p>
+    </div>
+</div>
+<a class="btn btn-primary" href="{% url 'schedule_change' s.pk %}" role="button">編集</a>
+<a class="btn btn-danger" href="{% url 'schedule_delete' s.pk %}" role="button">削除</a>
+<a class="btn btn-outline-secondary" href="{% url 'mycalendar' %}" role="button">戻る</a>
+{% endblock content %}
+
+
+{% block extrajs %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timedropper/1.0/timedropper.min.js"></script>
+    <script>
+        $(function () {
+            // timedropper
+            $("#id_start_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+            $("#id_end_time").timeDropper({
+                format: "H:mm",
+                setCurrentTime: false,
+            });
+        });
+    </script>
+{% endblock %}
